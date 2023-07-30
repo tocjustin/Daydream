@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/item_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="vertical"
+            android:textSize="25sp"
+            tools:text="LIST" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/add_reminder"
+        android:textSize="20sp"
+        android:onClick="onClickAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/edit_reminder"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/add_button"
+        app:layout_constraintLeft_toLeftOf="@id/add_button"/>
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="300dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/edit_reminder"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/edit_button"
+        app:layout_constraintLeft_toLeftOf="@id/edit_button"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

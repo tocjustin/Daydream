@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">calendar_project</string>
+    <string name="add_reminder">Add New Reminder</string>
+    <string name="edit_reminder">Edit Existing Reminder</string>
+    <string name="select_the_date">Select the date/time you want to be reminded!</string>
+    <string name="type_topic_name">Type reminder name here</string>
+    <string name="type_notes">Type notes here (Optional)</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
+    <string name="task_exist">Give different task name.</string>
+</resources>

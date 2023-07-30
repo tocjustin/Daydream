@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.Calendar_project" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blue_primary_light</item>
+        <item name="colorPrimaryDark">@color/blue_primary_dark</item>
+    </style>
+</resources>
