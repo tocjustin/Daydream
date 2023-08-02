@@ -107,11 +107,11 @@ class AddActivity : AppCompatActivity() {
         val currentTime = Calendar.getInstance()
 
         if (calendar.before(currentTime)) {
-            // If the alarm time is in the past, add one day to the alarm time.
+            // If the alarm time is in the past, don't save alarm.
             return
         }
 
-        alarmManager.setExact(
+        alarmManager.set(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
             pendingIntent
