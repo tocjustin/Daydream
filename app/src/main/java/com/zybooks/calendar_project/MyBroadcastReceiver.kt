@@ -7,11 +7,6 @@ import android.widget.Toast
 
 class MyBroadcastReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (intent != null) {
-            if (intent.action.equals("com.tester.alarmmanager")) {
-                var extra = intent.extras
-                Toast.makeText(context, extra!!.getString("message"), Toast.LENGTH_LONG).show()
-            }
-        }
+        Toast.makeText(context, "Alarm Triggered!", Toast.LENGTH_LONG).show()
     }
 }
