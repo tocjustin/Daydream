@@ -1,6 +1,9 @@
 package com.zybooks.calendar_project
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -22,11 +25,13 @@ class AddActivity : AppCompatActivity() {
     private lateinit var time: String
     private lateinit var finishButton: Button
     private lateinit var taskName: EditText
-    var year: Int = Calendar.YEAR
-    var month: Int = Calendar.MONTH
-    var dayOfMonth: Int = Calendar.DAY_OF_MONTH
-    var hour: Int = 0
-    var minute: Int = 0
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
+    private var year: Int = Calendar.YEAR
+    private var month: Int = Calendar.MONTH
+    private var dayOfMonth: Int = Calendar.DAY_OF_MONTH
+    private var hour: Int = 0
+    private var minute: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +53,14 @@ class AddActivity : AppCompatActivity() {
 
         timePicker = findViewById<TimePicker>(R.id.timePicker)
         timePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-            time = "$hourOfDay:$minute"
+            setTime(hourOfDay, minute)
+            Toast.makeText(this, "Time changed to " + time, Toast.LENGTH_SHORT).show()
         }
 
         finishButton = findViewById<Button>(R.id.finish_button)
         taskName = findViewById<EditText>(R.id.reminder_name_edit_view)
+
+        // Finish Button is visible when task name is given
         taskName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -65,24 +73,48 @@ class AddActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {}
-        }
+            }
         )
+
+        // Finish Button invisible until user inputs a name for task
         finishButton.visibility = View.GONE
+
+        //Sets up alarm manager
+        alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, MyBroadcastReceiver::class.java)
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     fun onClickFinish(view: View){
-        setTime(timePicker.hour, timePicker.minute)
-
-        val saveData = SaveData(applicationContext)
-        saveData.setAlarm(year, month, dayOfMonth, hour, minute)
-
-        val intent = Intent(this, FinishActivity::class.java)
-        startActivity(intent)
+        setAlarm()
+        Toast.makeText(this, "Time : " + time + "Date: " + date, Toast.LENGTH_LONG).show()
     }
 
-    fun setTime(hours: Int, mins: Int) {
+    private fun setTime(hours: Int, mins: Int) {
         hour = hours
         minute = mins
         time = "$hours:$mins"
+    }
+
+    private fun setAlarm() {
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        calendar.set(Calendar.SECOND, 0)
+
+        val currentTime = Calendar.getInstance()
+
+        if (calendar.before(currentTime)) {
+            // If the alarm time is in the past, add one day to the alarm time.
+            return
+        }
+
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
     }
 }
